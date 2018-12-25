@@ -131,15 +131,20 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith("http://") || url.startsWith("https://") ||
-                    url.startsWith("file://")) {
-                return false;
-            } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                view.getContext().startActivity(intent);
-                return true;
+            try {
+                if (url.startsWith("http://") || url.startsWith("https://") ||
+                        url.startsWith("file://")) {
+                    return false;
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                    return true;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return false;
         }
 
         @Override
@@ -355,6 +360,9 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
         webView.setLayoutParams(
                 new LayoutParams(LayoutParams.MATCH_PARENT,
                         LayoutParams.MATCH_PARENT));
+        String ua = webView.getSettings().getUserAgentString();
+        webView.getSettings().setUserAgentString(ua+" Mozilla/5.0 (iPhone; CPU iPhone OS 12_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/16B92 NewsArticle/6.9.7.22 JsSdk/2.0 NetType/WIFI (News 6.9.7 12.100000)");
+
 
         if (ReactBuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(true);
