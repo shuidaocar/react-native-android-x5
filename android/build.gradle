@@ -36,6 +36,5 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-//    compile fileTree(includes: ['*.jar'], dir: 'libs')
-    compile 'com.youzanyun.open.mobile:x5sdk:6.4.12'
+    compile fileTree(includes: ['*.jar'], dir: 'libs')
 }
